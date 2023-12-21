@@ -22,7 +22,6 @@ AC_CONFIG_HEADERS([include/config.h])
 AC_CONFIG_FILES([
 	Makefile
 	src/Makefile
-	util/client/Makefile
 ])
 LT_INIT
 AC_OUTPUT
