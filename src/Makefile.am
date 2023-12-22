@@ -4,4 +4,4 @@ bin_PROGRAMS  = tendril
 tendril_SOURCES  = main.cpp tendril.cpp tendril_queue_manager.cpp tendril_network_server.cpp
 tendril_CPPFLAGS = -std=c++20
 tendril_LDFLAGS  = -static-libgcc -static-libstdc++ -pthread
-tendril_LDADD    = -lrdkafka++
+tendril_LDADD    = -lrdkafka -lrdkafka++

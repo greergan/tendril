@@ -7,8 +7,8 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* Define to 1 if you have the <rdkafkacpp.h> header file. */
-#define HAVE_RDKAFKACPP_H 1
+/* Define to 1 if you have the <librdkafka/rdkafkacpp.h> header file. */
+#define HAVE_LIBRDKAFKA_RDKAFKACPP_H 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1

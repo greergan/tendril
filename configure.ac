@@ -5,12 +5,12 @@ AC_LANG_PUSH([C++])
 if[ "$with_librdkafka" == "" ]; then
 	AC_MSG_ERROR([could not locate librdkafka installation file system, use --with-librdkafka=DIR])
 else
-	CPPFLAGS="-I$with_librdkafka/include/librdkafka $CPPFLAGS"
+	CPPFLAGS="-I$with_librdkafka/include $CPPFLAGS"
 	LDFLAGS="-L$with_librdkafka/lib $LDFLAGS"
 	librdkafka="$with_librdkafka/lib/librdkafka++.a"
 fi
 PKG_PROG_PKG_CONFIG
-AC_CHECK_HEADERS([rdkafkacpp.h], [],[AC_MSG_ERROR([could not locate librdkafka installation file system, use --with-librdkafka=DIR])])
+AC_CHECK_HEADERS([librdkafka/rdkafkacpp.h], [],[AC_MSG_ERROR([could not locate librdkafka installation file system, use --with-librdkafka=DIR])])
 AC_CHECK_FILE([$librdkafka], [], [AC_MSG_ERROR([could not locate librdkafka installation file system, use --with-librdkafka=DIR])])
 cwd=`pwd`
 CPPFLAGS="-I$cwd/include $CPPFLAGS"

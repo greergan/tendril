@@ -2921,7 +2921,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
 if "$with_librdkafka" == "" ; then
 	as_fn_error $? "could not locate librdkafka installation file system, use --with-librdkafka=DIR" "$LINENO" 5
 else
-	CPPFLAGS="-I$with_librdkafka/include/librdkafka $CPPFLAGS"
+	CPPFLAGS="-I$with_librdkafka/include $CPPFLAGS"
 	LDFLAGS="-L$with_librdkafka/lib $LDFLAGS"
 	librdkafka="$with_librdkafka/lib/librdkafka++.a"
 fi
@@ -3715,12 +3715,12 @@ then :
 printf "%s\n" "#define STDC_HEADERS 1" >>confdefs.h
 
 fi
-       for ac_header in rdkafkacpp.h
+       for ac_header in librdkafka/rdkafkacpp.h
 do :
-  ac_fn_cxx_check_header_compile "$LINENO" "rdkafkacpp.h" "ac_cv_header_rdkafkacpp_h" "$ac_includes_default"
-if test "x$ac_cv_header_rdkafkacpp_h" = xyes
+  ac_fn_cxx_check_header_compile "$LINENO" "librdkafka/rdkafkacpp.h" "ac_cv_header_librdkafka_rdkafkacpp_h" "$ac_includes_default"
+if test "x$ac_cv_header_librdkafka_rdkafkacpp_h" = xyes
 then :
-  printf "%s\n" "#define HAVE_RDKAFKACPP_H 1" >>confdefs.h
+  printf "%s\n" "#define HAVE_LIBRDKAFKA_RDKAFKACPP_H 1" >>confdefs.h
 
 else $as_nop
   as_fn_error $? "could not locate librdkafka installation file system, use --with-librdkafka=DIR" "$LINENO" 5
