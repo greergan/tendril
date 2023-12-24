@@ -1,4 +1,5 @@
 #include "config.h"
+#include <cstdlib>
 #include <iostream>
 #include <tendril.h>
 #include <tendril/network/server.h>
@@ -8,7 +9,13 @@ namespace tendril {
 	bool keep_running = false;
 }
 void tendril::start(int argc, char *argv[]) {
-	if(tendril::queue::manager::initialize("localhost")) {
+	const char* brokers_list = std::getenv("KAFKA_BROKERS");
+	if(!brokers_list) {
+		std::cerr << "KAFKA_BROKERS environmental variable must be set" << std::endl;
+		exit(1);
+	}
+	puts(brokers_list);
+	if(tendril::queue::manager::initialize(std::string(brokers_list))) {
 		tendril::network::server::serve(8500, 10);
 	}
 	else {
