@@ -2938,15 +2938,6 @@ else
 	librdkafkapp="$with_librdkafka/lib/librdkafka++.a"
 	KAFKALIB_PATH="$with_librdkafka/lib"
 fi
-if "$with_libprometheus_cpp" == "" ; then
-	as_fn_error $? "could not locate libprometheus installation file system, use --with-libprometheus-cpp=DIR" "$LINENO" 5
-else
-	CPPFLAGS="-I$with_libprometheus_cpp/include $CPPFLAGS"
-	LDFLAGS="-L$with_libprometheus_cpp/lib $LDFLAGS"
-	libprometheus_cpp_core="$with_libprometheus_cpp/lib/libprometheus-cpp-core.so"
-	libprometheus_cpp_pull="$with_libprometheus_cpp/lib/libprometheus-cpp-pull.so"
-	PROMETHEUS_CPP_PATH="$with_libprometheus_cpp/lib"
-fi
 
 
 
@@ -3797,92 +3788,6 @@ then :
 
 else $as_nop
   as_fn_error $? "could not locate librdkafka installation file system, use --with-librdkafka=DIR" "$LINENO" 5
-fi
-
-       for ac_header in prometheus/counter.h
-do :
-  ac_fn_cxx_check_header_compile "$LINENO" "prometheus/counter.h" "ac_cv_header_prometheus_counter_h" "$ac_includes_default"
-if test "x$ac_cv_header_prometheus_counter_h" = xyes
-then :
-  printf "%s\n" "#define HAVE_PROMETHEUS_COUNTER_H 1" >>confdefs.h
-
-else $as_nop
-  as_fn_error $? "could not locate libprometheus installation file system, use --with-libprometheus-cpp=DIR" "$LINENO" 5
-fi
-
-done
-       for ac_header in prometheus/exposer.h
-do :
-  ac_fn_cxx_check_header_compile "$LINENO" "prometheus/exposer.h" "ac_cv_header_prometheus_exposer_h" "$ac_includes_default"
-if test "x$ac_cv_header_prometheus_exposer_h" = xyes
-then :
-  printf "%s\n" "#define HAVE_PROMETHEUS_EXPOSER_H 1" >>confdefs.h
-
-else $as_nop
-  as_fn_error $? "could not locate libprometheus installation file system, use --with-libprometheus-cpp=DIR" "$LINENO" 5
-fi
-
-done
-       for ac_header in prometheus/registry.h
-do :
-  ac_fn_cxx_check_header_compile "$LINENO" "prometheus/registry.h" "ac_cv_header_prometheus_registry_h" "$ac_includes_default"
-if test "x$ac_cv_header_prometheus_registry_h" = xyes
-then :
-  printf "%s\n" "#define HAVE_PROMETHEUS_REGISTRY_H 1" >>confdefs.h
-
-else $as_nop
-  as_fn_error $? "could not locate libprometheus installation file system, use --with-libprometheus-cpp=DIR" "$LINENO" 5
-fi
-
-done
-as_ac_File=`printf "%s\n" "ac_cv_file_$libprometheus_cpp_core" | $as_tr_sh`
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $libprometheus_cpp_core" >&5
-printf %s "checking for $libprometheus_cpp_core... " >&6; }
-if eval test \${$as_ac_File+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "$libprometheus_cpp_core"; then
-  eval "$as_ac_File=yes"
-else
-  eval "$as_ac_File=no"
-fi
-fi
-eval ac_res=\$$as_ac_File
-	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-printf "%s\n" "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_File"\" = x"yes"
-then :
-
-else $as_nop
-  as_fn_error $? "could not locate libprometheus installation file system, use --with-libprometheus-cpp=DIR" "$LINENO" 5
-fi
-
-as_ac_File=`printf "%s\n" "ac_cv_file_$libprometheus_cpp_pull" | $as_tr_sh`
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $libprometheus_cpp_pull" >&5
-printf %s "checking for $libprometheus_cpp_pull... " >&6; }
-if eval test \${$as_ac_File+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "$libprometheus_cpp_pull"; then
-  eval "$as_ac_File=yes"
-else
-  eval "$as_ac_File=no"
-fi
-fi
-eval ac_res=\$$as_ac_File
-	       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-printf "%s\n" "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_File"\" = x"yes"
-then :
-
-else $as_nop
-  as_fn_error $? "could not locate libprometheus installation file system, use --with-libprometheus-cpp=DIR" "$LINENO" 5
 fi
 
 cwd=`pwd`

@@ -10,15 +10,6 @@
 /* Define to 1 if you have the <librdkafka/rdkafkacpp.h> header file. */
 #define HAVE_LIBRDKAFKA_RDKAFKACPP_H 1
 
-/* Define to 1 if you have the <prometheus/counter.h> header file. */
-#define HAVE_PROMETHEUS_COUNTER_H 1
-
-/* Define to 1 if you have the <prometheus/exposer.h> header file. */
-#define HAVE_PROMETHEUS_EXPOSER_H 1
-
-/* Define to 1 if you have the <prometheus/registry.h> header file. */
-#define HAVE_PROMETHEUS_REGISTRY_H 1
-
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
 
