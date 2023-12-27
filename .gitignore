@@ -1,5 +1,4 @@
-tendril
-client
+src/tendril
 .vscode
 *~
 *.o
