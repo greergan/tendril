@@ -8,6 +8,7 @@ tendril_SOURCES  = main.cpp \
 					tendril_configuration_handler.cpp \
 					tendril_http.cpp \
 					tendril_http_parser.cpp \
+					tendril_metrics.cpp \
 					tendril_network_address_set.cpp \
 					tendril_network_listener.cpp \
 					tendril_queue_manager.cpp \

@@ -9,13 +9,16 @@
 #include <functional>
 #include <future>
 #include <tendril/client/connection/information.h>
+#include <tendril/metrics.h>
 #include <tendril/network/listener.h>
 #include <tendril/network/listener/information.h>
 
 #include <iostream>
+
 void tendril::network::listener::standard(
 		tendril::network::listener::Information& listener_information,
-		std::function<void(tendril::client::connection::Information&)> client_handler) {
+		std::function<void(tendril::client::connection::Information&, tendril::Metrics&)> client_handler,
+		tendril::Metrics& metrics) {
 	std::cout << "starting tendril::network::listener::standard\n";
 	struct sockaddr_in listener_socket_address;
 	int server_socket;
@@ -64,11 +67,13 @@ void tendril::network::listener::standard(
 			perror("fcntl");
 			exit(1);
 		}
+		metrics.counters["tcp_connections"].inc();
 		tendril::client::connection::Information client_information;
 		client_information.read_timeout = listener_information.read_time_out;
 		client_information.client_address = client_address;
 		client_information.socket_handle = client_connection;
-		std::async(std::ref(client_handler), std::ref(client_information));
+		std::thread new_thread(client_handler, std::ref(client_information), std::ref(metrics));
+		new_thread.detach();
     }
 
 	std::cout << "ending tendril::network::listener::standard\n";

@@ -1,11 +1,12 @@
 #include "config.h"
 #include <future>
 #include <iostream>
+#include <sstream>
 #include <thread>
 #include <tendril.h>
 #include <tendril/client/connection/handler/metrics.h>
 #include <tendril/configuration/handler.h>
-#include <tendril/metrics>
+#include <tendril/metrics.h>
 #include <tendril/network/listener.h>
 #include <tendril/network/server.h>
 #include <tendril/queue/manager.h>
@@ -28,11 +29,25 @@ void tendril::start(int argc, char *argv[]) {
 	}
 	std::cout << "kafka bootstrap servers " << configuration.kafka.bootstrap_servers << std::endl;
 
-	auto cb = [](){
-		std::cout << "in callback\n";
-		while(true);
-	};
 	if(tendril::queue::manager::initialize(configuration)) {
+		tendril::Metrics metrics;
+		metrics.add_counter("threads_ended",
+							"tendril_client_threads total number of client threads ended",
+							"tendril_client_threads count",
+							"tendril_client_threads{{state=\"ended\"}, %pid}");
+		metrics.add_counter("threads_started",
+							"tendril_client_threads total number of client threads started",
+							"tendril_client_threads count",
+							"tendril_client_threads{{state=\"started\"}, %pid}");
+		metrics.add_counter("metrics_requests",
+							"tendril_metrics_requests total number of metrics requests",
+							"tendril_metrics_requests count",
+							"tendril_metrics_requests%pid");
+		metrics.add_counter("tcp_connections",
+							"tendril_tcp_connections total number of incoming tcp connections",
+							"tendril_tcp_connections count",
+							"tendril_tcp_connections%pid");
+
 		std::vector<std::thread> listener_threads;
 /* 		for(unsigned int i = 0; i < configuration.tendril.network.listener.listeners_information.size(); ++i) {
 			configuration.tendril.network.listener.listeners_information.at(i).client_handler = cb;
@@ -43,11 +58,12 @@ void tendril::start(int argc, char *argv[]) {
 		listener_threads.push_back(
 			std::thread(tendril::network::listener::standard,
 				std::ref(configuration.tendril.network.metrics.listener.information),
-				std::ref(tendril::client::connection::handler::metrics::handle_client_connection)));
+				std::ref(tendril::client::connection::handler::metrics::handle_client_connection),
+				std::ref(metrics)
+		));
 		for(unsigned int i = 0; i < listener_threads.size(); ++i) {
 			listener_threads.at(i).join();
 		}
-		//while(true);
 	}
 	else {
 		std::cerr << "Error initializing kafka queue\n";

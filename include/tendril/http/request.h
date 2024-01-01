@@ -4,6 +4,7 @@
 namespace tendril::http {
 	struct Request {
 		Request(void);
+		Request(char* request_pointer);
 		Request(std::string& request_string);
 		tendril::http::Headers& headers(void);
 		void path(std::string value);
