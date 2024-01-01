@@ -1,4 +1,5 @@
 #include <sstream>
+#include <strstream>
 #include <string>
 #include <tendril/http/parser.h>
 static void tendril::http::parser::parse_line_1(std::string& method_string, tendril::http::Request* request) {
@@ -14,8 +15,9 @@ static void tendril::http::parser::parse_line_1(std::string& method_string, tend
 		count++;
 	}
 }
-void tendril::http::parser::parse_http_request(std::string& request_string, tendril::http::Request* request) {
-	std::stringstream request_stream(request_string);
+void tendril::http::parser::parse_http_request(const char* request_pointer, tendril::http::Request* request) {
+	std::stringstream request_stream;
+	request_stream << request_pointer;
 	std::string line;
 	int line_number = 1;
 	while(getline(request_stream, line)) {
@@ -37,4 +39,7 @@ void tendril::http::parser::parse_http_request(std::string& request_string, tend
 			request->headers().set(key, value);
 		}
     }
+}
+void tendril::http::parser::parse_http_request(std::string& request_string, tendril::http::Request* request) {
+	parse_http_request(request_string.c_str(), request);
 }

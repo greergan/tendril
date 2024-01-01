@@ -55,6 +55,9 @@ std::string& tendril::http::Response::response_code_string(void) {
 }
 /* tendril::http::Request */
 tendril::http::Request::Request(void) {}
+tendril::http::Request::Request(char* request_pointer) {
+	tendril::http::parser::parse_http_request(request_pointer, this);
+}
 tendril::http::Request::Request(std::string& request_string) {
 	tendril::http::parser::parse_http_request(request_string, this);
 }
