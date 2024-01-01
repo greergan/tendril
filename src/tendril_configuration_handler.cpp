@@ -3,6 +3,8 @@
 #include <vector>
 #include <tendril/configuration/handler.h>
 #include <tendril/network/address/set.h>
+#include <tendril/system/information.h>
+#include <tendril/system/process/information.h>
 #include <tendril/utilities.h>
 namespace tendril::configuration::handler {
 	tendril::Configuration configuration;
@@ -69,13 +71,13 @@ void tendril::configuration::handler::handle_environmental_variables_metrics(voi
 	tendril::network::address::AddressSet address_set;
 	if(std::getenv("TENDRIL_METRICS_SERVER_ADDRESS")) {
 		address_set = tendril::network::address::string_to_address_set(std::getenv("TENDRIL_METRICS_SERVER_ADDRESS"));
-		configuration.tendril.network.metrics.listener.address_set = address_set;
+		configuration.tendril.network.metrics.listener.information.address_set = address_set;
 	}
 	if(address_set.address.empty()) {
-		configuration.tendril.network.metrics.listener.address_set.address = "127.0.0.1";
+		configuration.tendril.network.metrics.listener.information.address_set.address = "127.0.0.1";
 	}
 	if(!address_set.port) {
-		configuration.tendril.network.metrics.listener.address_set.port = 9090;
+		configuration.tendril.network.metrics.listener.information.address_set.port = 9090;
 	}
 	if(std::getenv("TENDRIL_METRICS_SERVER_SERVE")) {
 		configuration.tendril.network.metrics.listener.serve
@@ -90,6 +92,7 @@ void tendril::configuration::handler::handle_initialization_file(void) {
 }
 tendril::Configuration& tendril::configuration::handler::initialize(bool& configured_required) {
 	required_configured = &configured_required;
+	configuration.system.max_threads = tendril::system::get_system_max_threads();
 	handle_initialization_file(); // first
 	handle_environmental_variables(); // overrides file variables
 	return configuration;
